@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="icon" href="./pictures/login.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        body {
+        height: fit-content;
+        background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 5px solid #aca0af86;
+            border-radius: 30px;
+            width: 80%; 
+            max-width: 600px; 
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.424);
+            box-shadow: 0px 0px 20px rgba(27, 27, 28, 0.539);  
+        }
+        img {
+            width:15%;
+        }
+        h2 {
+            color: #2f2f2cdc;
+            text-shadow: 2px 6px 4px rgba(185, 177, 177, 0.5);
+        }
+        .form-control {
+            width: 80%;
+            background-color: #aca0af86;
+            border: none;
+            color: rgb(93, 96, 169);
+        } 
+        .form-control:focus {
+            color: rgb(54, 70, 86); 
+            background-color: #474b9e26;
+        }
+        hr {
+            width: 80%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-top: 2px solid #787379c6;
+        }
+        .btn {
+            padding: 10px 30px;
+            border: none;
+            outline: none;
+            border-radius: 15px;
+            color: rgb(255, 255, 254);
+            background-color: #000000d0;
+            box-shadow: 0px 3px 5px rgba(104, 99, 110, 0.349);  
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+            background-color: rgba(144, 125, 135, 0.671);
+            color:  rgb(0, 0, 0);
+            opacity: 0.8;
+            box-shadow: 0px 3px 5px rgba(104, 99, 110, 0.349);  
+        }
+        .btn:active {
+            background-color: rgba(144, 125, 135, 0.466) !important;
+            color: rgb(255, 255, 255)!important;
+        }
+        @media (max-width: 430px) {
+            img {
+            width:35%;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="container my-5 pb-5">
+        <div><img class="mt-4" src="./pictures/login.png"></div>
+        <h2 class="mt-3">Sign Up</h2>
+        <hr>
+        <input id="register-username" type="text" class="form-control mb-2" placeholder="Username">
+        <input id="register-email" type="email" class="form-control mb-2" placeholder="Email">
+        <input id="reigster-password" type="Password" class="form-control mb-2" placeholder="Password">
+        <button id="send-registration" class="btn btn-primary my-3">Sign Up</button>
+        <h2 class="mt-3">Log In</h2>
+        <hr>
+        <input id="log-username" type="text" class="form-control mb-2" placeholder="Username">
+        <input id="log-password" type="Password" class="form-control mb-2" placeholder="Password">
+        <button id="log-in" class="btn btn-primary my-3">Log In</button>
+    </div> 
+    <script src="./scripts/script.js"></script>
+</body>
+</html>
