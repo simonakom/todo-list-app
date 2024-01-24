@@ -11,9 +11,14 @@
     <style>
         /* main */
         body {
-            height: fit-content;
+            min-height: 100vh;
             background-image: linear-gradient(135deg, #8bc5ecd6 0%, #9599e2ba 100%);            
+            background-size: cover;
             user-select: none;
+        }
+        .container {
+            width: 90%; 
+            max-width: 1200px; 
         }
         .logo {
             height: 70px;
@@ -38,10 +43,9 @@
         h5 {
             color: rgba(32, 49, 92, 0.676);
             text-shadow: 1px 1px 6px rgba(146, 139, 135, 0.832); 
-
         }
         .todo-list, .done-list {
-            width: 40%;
+            width: 42%;
             min-height: 60vh;
             background-color: rgba(255, 255, 255, 0.424);
             border-radius: 20px;
@@ -95,17 +99,14 @@
             scale: 1.1;
         }
         /* main input */
-        .lists {
-            height: 60vh;
-        }
-        .task input, .updateInput {
+        .task  input {
             box-shadow: 0px 1px 4px #7e7b7bbc;  
             border-top-left-radius: 15px !important;
             border-bottom-left-radius: 15px !important;
             background-color: #dfcfe34a;
             border: none;
         }
-        .task button, .updateButton  {
+        .task button {
             box-shadow: 0px 1px 4px #7e7b7bbc;  
             border-top-right-radius: 15px !important;
             border-bottom-right-radius: 15px !important;
@@ -131,10 +132,6 @@
             background-color: rgba(219, 218, 230, 0.525);
             color: rgb(96, 91, 91);
         }
-        .updateInput :focus {
-            background-color: rgba(29, 122, 143, 0.189);
-            color: rgb(96, 91, 91);
-        }
         /* dragging elements */
         .dragging {
         opacity: 0.4;
@@ -157,7 +154,13 @@
             background-color: #aca0afce;
         }
         /* responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 760px) {
+        .container {
+        width: 100%; 
+        }
+        body {
+            min-height: 150vh;
+        }
         .lists {
             flex-direction: column;
             align-items: center;
@@ -169,7 +172,7 @@
         .actions {
             flex-direction: row;
             gap: 20px;
-            margin: 30px 0;          
+            margin: 10px 0;          
         }
         .right {
             rotate: 90deg;
@@ -177,7 +180,7 @@
         .left {
             rotate: 90deg;
         }
-    }
+    }    
     </style>
 </head>
 <body>
@@ -190,7 +193,7 @@
         <div class="lists d-flex justify-content-between">
             <div class="todo-list d-flex flex-column justify-content-between">
                 <div class="all-todos dropzone px-5 py-3" style="width: 100%">
-                    <h5 class="mb-3"><u>TO DO...</u></h5>
+                    <h5 class="mb-4"><u>TO DO...</u></h5>
                     <div todo-id="1" class="todo d-flex justify-content-between draggable" draggable="true">
                         <input class="form-check-input check-color" type="checkbox" name="todo">
                         <span class="todo-text">Go for a walk</span> 
@@ -203,7 +206,7 @@
                             </ul>
                           </div>
                     </div>
-                    <div todo-id="1" class="todo d-flex justify-content-between draggable" draggable="true">
+                    <div todo-id="2" class="todo d-flex justify-content-between draggable" draggable="true">
                         <input class="form-check-input check-color" type="checkbox" name="todo">
                         <span class="todo-text">Run 5 km</span> 
                         <div class="dropdown">
@@ -216,13 +219,6 @@
                           </div>
                     </div>
                 </div>
-                <!-- <div class="d-flex input-group task">
-                    <input type="text" class="form-control input" placeholder="Type your task here..">
-                    <button type="button" class="btn btn-dark addButton" style="min-width: 20%">Add</button> 
-
-                    <input type="text" class="form-control updateInput" placeholder="Update your task here.."  style="display: none;">
-                    <button type="button" class="btn btn-dark updateButton" style="min-width: 20%; display: none;" display="none">Update</button>    
-                </div> -->
             </div>
             <div class="actions d-flex  justify-content-center">
                 <i id="moveToDone" class="right bi bi-arrow-right-circle-fill" style="color: rgb(94, 134, 208);"></i>
@@ -243,24 +239,11 @@
                         </ul>
                       </div>
                 </div>
-                <!-- <div class="done d-flex justify-content-between draggable" draggable="true"><span>Go to cinema</span>
-                    <div class="dropdown">
-                        <i class="bi bi-chevron-bar-down" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                        <ul class="dropdown-menu drop-color">
-                            <li><a class="dropdown-item" href="#">Done</a></li>
-                            <li><a class="dropdown-item" href="#">Delete</a></li>
-                            <li><a class="dropdown-item" href="#">Update</a></li>
-                        </ul>
-                    </div> 
-                </div> -->
             </div>
         </div>
         <div class="d-flex input-group task my-5">
             <input id="todo-input" type="text" class="form-control input py-3 px-5" placeholder="Type your task here..">
             <button id="todo-submit" type="button" class="btn btn-dark addButton" style="min-width: 12%">Add</button> 
-
-            <input type="text" class="form-control updateInput py-3 px-5" placeholder="Update your task here.."  style="display: none;">
-            <button type="button" class="btn btn-dark updateButton" style="min-width: 10%; display: none;" display="none">Update</button>    
         </div>
     </div>
     <script src="./scripts/api.js"></script>
