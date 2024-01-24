@@ -67,7 +67,7 @@ for (const dropZone of dropZones) {
             // Update the button text to "Undo"
             const doneButton = dragElement.querySelector(".todomove");
             if (doneButton) {
-                doneButton.textContent = "Undo-Drag";
+                doneButton.textContent = "Undo";
         }
         // doneButton.onclick =  moveFromDoneToTodo; //kitaip undo drag neveikia 
     }
