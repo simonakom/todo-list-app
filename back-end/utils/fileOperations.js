@@ -1,6 +1,6 @@
 //All operations releated to files
 
-const fs = require("fs"); //failu sistemos modulis
+const fs = require("fs"); //File System Module
 
 async function writeFile(obj) {
 	await fs.writeFile("./data.json", JSON.stringify(obj), (err) => {

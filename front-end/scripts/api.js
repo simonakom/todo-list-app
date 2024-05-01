@@ -1,7 +1,6 @@
-//tikrinimas vyskta todos.html file kuris prijungtas prie api script.
-//session check: kad vartotojai galetu matyti todo page tik kai yra prisijunge. O jei nera prisijunge matytu register page
-
-async function sessionCheck(){
+//the check occurs in the todos.html file which is connected to the api script.
+//session check: so that users can see the to-do page only when they are logged in. And if they are not logged in, they can see the register page
+async function sessionCheck(){ 
     try {
         const promise = await fetch ("http://localhost/server/user/session-check", {credentials: "include"}); 
         const answer = await promise.json();
@@ -15,20 +14,17 @@ async function sessionCheck(){
 }
 sessionCheck();
  
-
-//funkcijos skirtos kreipimuisi i serveri kad paimti is ten 
-
-//funkcija kuri prideda nauja todo kai papaudziamas "add" button
-async function postNewTodo (todo) { //priima pati todo objekta kuris siunciamas su fetch
+//a function that adds a new to-do when the "add" button is pressed
+async function postNewTodo (todo) { //accepts the to-do object itself which is sent with fetch
     try {
-        const promise = await fetch ("http://localhost/server/todos", {  //siunciamas request i serveri 
-          //naujo todo pridejimas 
+        const promise = await fetch ("http://localhost/server/todos", {  //a request is sent to the server 
+          //new to-do addition 
             method: "POST", 
             credentials: "include", 
             headers: {   
-                "Content-Type": "application/json" // nurodomas duomenu tipas, kuris yra issiunciamas i serveri
+                "Content-Type": "application/json" //specifies the type of data that is sent to the server
              },
-            body: JSON.stringify(todo)  // nurodoma kokiu duomenys norime perduoti serveriui. negalim naduoti objekto o tik string formato duomenys
+            body: JSON.stringify(todo)  //specifies the data to be transmitted to the server. Cant use object -  only string format data
         });
         const result = await promise.json(); //fetch result
         // console.log(result); 
@@ -37,23 +33,22 @@ async function postNewTodo (todo) { //priima pati todo objekta kuris siunciamas 
     } catch (error) {}
 }
 
-//panaudojma "todoDialogActions.js"
+//used "todoDialogActions.js"
 
-
-//funkcija kuri gaus visus todo (kad po refrsh jie vis dar liktu) (panaudojama todoDialogActions.js function showAlltodos)
+//function that will get all todo (so that they are still there after refrsh) (used in todoDialogActions.js function showAlltodos)
 async function getAllTodos() {
     try {
-        const promise = await fetch ("http://localhost/server/todos") //nereikia nustatymu nes cia naudojam GET ir jis yra by default
+        const promise = await fetch ("http://localhost/server/todos") //no settings are needed because we use GET here and it is by default
         const result = await promise.json();
         console.log(result);
-        showAllTodos(result.filter((todo) => !todo.done)); //todo.done === false ->pridedama i todo lentele
-        showAllDones (result.filter((todo) => todo.done)); //todo.done === true ->pridedama i done lentele
-        return result; //masyvas 
+        showAllTodos(result.filter((todo) => !todo.done)); //todo.done === false ->to be added to the to-do table
+        showAllDones (result.filter((todo) => todo.done)); //todo.done === true ->to be added to the done table
+        return result; //array
     } catch (error) {
              }
 }
 
-//todo atnaujinimo funkcija
+//to-do update function
 async function updateTodo (todo){
     const promise = await fetch (`http://localhost/server/todos/${todo.id}`, {
         credentials: "include", 
@@ -63,11 +58,11 @@ async function updateTodo (todo){
         body: JSON.stringify(todo) 
     }); 
     const result = await promise.json();
-    if (!promise.ok){// jei atsakymas nesekmingas
+    if (!promise.ok){ //if the answer is unsuccessful
         console.error ("Atsakymas is endpoint /todos/45 buvo nesekmingas");
     }
     else {
         return result;
     }
 }
-//funkcija panaudojama "todoDialogactions"
+//function used in "todoDialogactions"

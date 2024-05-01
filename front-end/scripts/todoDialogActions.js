@@ -13,18 +13,18 @@ const todoSubmitElement = document.querySelector("#todo-submit");
 
 //------------------------Move Element (add eventListeners-------------------------------------------------//
   
-function moveFromTodoToDone (event) { //perkelimas i done
-    const targetId = event.target.attributes.todomove.value //identifikuojamas atributas (skaicius)
+function moveFromTodoToDone (event) { //moved to done
+    const targetId = event.target.attributes.todomove.value //identifiable attribute (number)
     const moveTarget = document.querySelector(`[todo-id="${targetId}"]`);
-    doneListElement.appendChild(moveTarget)//prideti move target kaip vaika i done list
-    event.target.innerText = texts.moveElementText.done; // keiciamas button reiksme ir nurodoma kuri reiksme
+    doneListElement.appendChild(moveTarget)//add move target as a child to done list
+    event.target.innerText = texts.moveElementText.done; // the value of button is changed and which value is specified
     event.target.onclick = moveFromDoneToTodo;
 }
 
-function moveFromDoneToTodo (event) { //perkelimas atgal i undone 
-    const targetId = event.target.attributes.todomove.value //identifikuojamas atributas (skaicius)
+function moveFromDoneToTodo (event) { //moved back to undone 
+    const targetId = event.target.attributes.todomove.value //identifiable attribute (number)
     const moveTarget = document.querySelector(`[todo-id="${targetId}"]`);
-    todoListElement.appendChild(moveTarget)//prideti move target kaip vaika atgal i undone list
+    todoListElement.appendChild(moveTarget)//add move target as child back to undone list
     event.target.innerText = texts.moveElementText.todo;  
     event.target.onclick = moveFromTodoToDone;
 } 
@@ -32,8 +32,8 @@ function moveFromDoneToTodo (event) { //perkelimas atgal i undone
 //--------------------Update Element (text in pop-up)----------------------------------//
 
 function updateTodo (event) {
-    const targetId = event.target.attributes.todoupdate.value; //identifikuojamas atributas (skaicius)
-    const updateTarget = document.querySelector(`[todo-id="${targetId}"] .todo-text`);  //redaguojamas elementas. .todo-text nes nurodo ta tiksliai kesime
+    const targetId = event.target.attributes.todoupdate.value; //identifiable attribute (number)
+    const updateTarget = document.querySelector(`[todo-id="${targetId}"] .todo-text`);  //editable item. .todo-text because it specifies exactly what we are changing
     updateTarget.innerText = prompt("Update your task here...", updateTarget.innerText) //prompt: pop-up table
 }
  
@@ -47,7 +47,7 @@ function updateTodo (event) {
 
 // // Function to update the task and hide the update input field/button
 // function updateTask(targetId, currentValue) { //targetId represents the ID of the task to be updated/ currentValue represents the current text content of the task.
-//     const updateTarget = document.querySelector(`[todo-id="${targetId}"] span`); //selects HTML element based on id //span :  to change the text content inside this span element
+//     const updateTarget = document.querySelector(`[todo-id="${targetId}"] span`); //selects HTML element based on id //span : to change the text content inside this span element
 //     updateInput.value = currentValue; 
 
 //     updateInput.style.display = "inline-block";
@@ -77,7 +77,7 @@ function updateTodo (event) {
 
 //-----------------------Add Element---------------------------------------------------//
 
-//event listener pasisalina kai pridideda naujas todo tad reikia funkciju kad 
+//the event listener is removed when a new to-do is added, so functions are needed that... 
 function addClickListenersToTodoDialogButtons () {
 const todoMoveButtonsinTodoList = document.querySelectorAll(".all-todos .todomove");
 const todoMoveButtonsinDoneList = document.querySelectorAll(".done-list .todomove");
@@ -85,8 +85,8 @@ const todoDeleteButtons = document.querySelectorAll(".tododelete");
 const todoUpdateButtons = document.querySelectorAll(".todoupdate");
 
 // update todo
-for (const updateTodoButton of todoUpdateButtons) { //iteruojama per visa sarasa
-    updateTodoButton.onclick = updateTodo; //keikvienam update mygtukui bus priskirtas onclick
+for (const updateTodoButton of todoUpdateButtons) { //iterated over the whole list
+    updateTodoButton.onclick = updateTodo; //each update button will be assigned an onclick
     }
 // move todo
 for (const todoMoveButton of todoMoveButtonsinTodoList) {
@@ -108,29 +108,29 @@ for (const deleteButton of todoDeleteButtons) {
 }
 // addClickListenersToTodoDialogButtons(); 
 
-async function addNewTodo () {  //turi buti kreipiamasi i serveri (api.js) ir gaunamas todo  atsakymas is serverio
+async function addNewTodo () {  //the server (api.js) must be contacted and a response from the server must be received
         
-    const inputValue = todoInputElement.value;  //kad reiksme is input butu gaunama
-    todoInputElement.value = "";  //kai tik gaunam reiksme, ja paverciam i tuscia. (kad isitrintu  )
-    // atsakymas bus gaunamas is serverio (gaunamas todo id ir value). Kadangi generuojamas naujas html, event listener pradings no dialog mtgtuku ir drag tad reikia jiems funkciju. Checkbox veikia, nes ten nera eventlisteners
-    //kol nera back-en pilnai neveiks delete/update (mygtukai)..funkcijos nes priskiriamas bednras id visiem elementams
+    const inputValue = todoInputElement.value;  //so that the value from input is obtained
+    todoInputElement.value = "";  //as soon as we get a value, we turn it into an empty one (to erase it).
+    //the response will be received from the server (received to-do id and value). Since new html is generated, the event listener will dissapear from the dialog buttons and drag so they need functions. Checkbox works because there are no eventlisteners
+    //until the back-end is in place, the delete/update (buttons) functions will not work at all, because a common id is assigned to all elements.
 
-    const response = await postNewTodo ({ //objektas kuriame saugojamas rezultatas //"todo" post request: siusti i serveri 
-        // username: "Simona", //prisijunges vartotojas
+    const response = await postNewTodo ({ //object where the result is stored //"todo" post request: send to server 
+        // username: "Simona", //logged in user
         todo: inputValue,
     }) 
-    console.log(response); //Grazinamas objektas 
+    console.log(response); //Object to be returned 
 
-    const newTodoObject = response.newTodo; //is grazinamo objekto istraukiama "newTodo" Objektas 
+    const newTodoObject = response.newTodo; //from the returned object the "newTodo" object is taken 
     // console.log(newTodoObject);
     
     const newTodo = generateTodoHTML(newTodoObject);
 todoListElement.innerHTML += newTodo;
-addDragFunctionalityToAllElements(); //drag failas turi buti importuojamas pirmiau nei kiti failai
-addClickListenersToTodoDialogButtons(); //kad nuaji elementai butu su funkcijom  //delete/update
+addDragFunctionalityToAllElements(); //the drag file must be imported before other files
+addClickListenersToTodoDialogButtons(); //so new elements would have //delete/update functions
 }
 
-todoSubmitElement.onclick = addNewTodo; //veikia paspaudus ant mygtuko
+todoSubmitElement.onclick = addNewTodo; //works by pressing a button
 
 
 //-----------------------Add todo by "Enter"-------------------------------------------//
@@ -139,13 +139,13 @@ todoInputElement.onkeydown = (event) => {
 };
  
 //-----------------------PAGE REFRESH: show todos/dones ------------------------------//
-function showAllTodos(todos) {  //"todo" - nurodomas todo masyva  // funkcija kvieciama is "api"
+function showAllTodos(todos) {  //"todo" - specifies the todo array // the function is called from "api"
     let innerHtml = ''; 
-    for (const todo of todos) {  //pagal gauta masyva sukamas siklas ir generuojama html
-    // innerHtml pridedmas kodas
+    for (const todo of todos) {  //by received array iteration is looped and html is generated
+    // innerHtml add code
     innerHtml += generateTodoHTML(todo)
     }
-    todoListElement.innerHTML += innerHtml; //kad sugeneruotas html matytuse pgr. page
+    todoListElement.innerHTML += innerHtml; //so that the generated html is visible on the main page
     addDragFunctionalityToAllElements(); 
     addClickListenersToTodoDialogButtons();
 } 
@@ -164,8 +164,8 @@ function showAllDones(todos) {
 function generateTodoHTML (todo) {
     console.log(todo);
     return `   
-    <div todo-id="${todo.id}" class="todo d-flex justify-content-between draggable" draggable="true">
-    <input class="form-check-input check-color" type="checkbox" name="todo"   >
+    <div todo-id="${todo.id}" class="todo d-flex justify-content-between draggable overflow-hidden" draggable="true">
+    <input class="form-check-input check-color" type="checkbox" name="todo">
     <span class="todo-text">${todo.todo}</span> 
 
     <div class="dropdown">
@@ -179,7 +179,7 @@ function generateTodoHTML (todo) {
 </div>`;
 }
 
-getAllTodos() //  funkcija is "api"
+getAllTodos() //  function from "api"
 
 
 

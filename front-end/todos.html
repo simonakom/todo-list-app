@@ -50,7 +50,6 @@
             background-color: rgba(255, 255, 255, 0.424);
             border-radius: 20px;
             box-shadow: 0px 5px 10px rgba(61, 61, 62, 0.274);  
-            border: 1px solid #aca0af44;
         }
         .todo-list {
             display: flex;
@@ -74,7 +73,7 @@
         .check-color {
             background-color: rgba(32, 49, 92, 0.398);
         }
-        .drop-color  {
+        .drop-color {
             background-color: #c2b8c5a8;
         }
         .drop-color a {
@@ -82,7 +81,6 @@
         }
         .dropdown-menu li:hover a{
             background-color: #cedeee;
-            
         }
         .dropdown-menu li:active a{
             background-color: #9ea7b085;
@@ -107,11 +105,10 @@
             margin-top: 5%;
             margin-bottom: 5%;
         }
-        .task  input {
-            box-shadow: 0px 1px 4px #7e7b7bbc;  
+        .task input {
             border-top-left-radius: 15px !important;
             border-bottom-left-radius: 15px !important;
-            background-color: #dfcfe34a;
+            background-color: rgba(87, 71, 93, 0.29);
             border: none;
         }
         .task button {
@@ -142,7 +139,7 @@
         }
         /* dragging elements */
         .dragging {
-        opacity: 0.4;
+            opacity: 0.4;
         }
         .dragover {
             background-color: #aca0afcd;
@@ -150,7 +147,7 @@
         /* scroll-bar */
         .all-todos,
         .done-list {
-            overflow-y: scroll;
+            overflow: hidden;
             height: 100%
         }           
         .all-todos::-webkit-scrollbar,
@@ -163,55 +160,59 @@
         }
         /* responsive */
         @media (max-width: 760px) {
-        .container {
-        width: 100%; 
+            .container {
+                width: 100%; 
+            }
+            body {
+                min-height: 150vh;
+            }
+            .lists {
+                flex-direction: column;
+                align-items: center;
+            }
+            .todo-list,
+            .done-list {
+                width: 80%;
+            }
+            .actions {
+                flex-direction: row;
+                gap: 20px;
+                margin: 30px 0;          
+            }
+            .right {
+                rotate: 90deg;
+            }
+            .left {
+                rotate: 90deg;
+            }
+            .input-group {
+                margin-top: 8%;
+                margin-bottom: 10%;
+                max-width: 80%; 
+                align-items: center;
+                margin-left: auto; 
+                margin-right: auto; 
+            }
+        }    
+        @media (max-width: 300px) {
+            h3 {
+                display: none;
+            }
         }
-        body {
-            min-height: 150vh;
-        }
-        .lists {
-            flex-direction: column;
-            align-items: center;
-        }
-        .todo-list,
-        .done-list {
-            width: 80%;
-        }
-        .actions {
-            flex-direction: row;
-            gap: 20px;
-            margin: 30px 0;          
-        }
-        .right {
-            rotate: 90deg;
-        }
-        .left {
-            rotate: 90deg;
-        }
-        
-        .input-group {
-        margin-top: 8%;
-        margin-bottom: 10%;
-        max-width: 80%; 
-        align-items: center;
-        margin-left: auto; 
-        margin-right: auto; 
-        }
-    }    
     </style>
 </head>
 <body>
-    <div class="container text-center">
-        <div class="d-flex  justify-content-center">
+    <div class="container text-center overflow-hidden">
+        <div class="d-flex justify-content-center">
             <h3 class="mt-3">Do &nbsp;<s>IT !</s></h3>
             <img class="logo mx-4 mt-4" src="./pictures/booking.png">
         </div>
         <hr class="hr my-4"/>
         <div class="lists d-flex justify-content-between">
-            <div class="todo-list d-flex flex-column justify-content-between">
+            <div class="todo-list d-flex flex-column justify-content-between overflow-hidden">
                 <div class="all-todos dropzone px-5 py-3" style="width: 100%">
-                    <h5 class="mb-4"><u>TO DO...</u></h5>
-                    <div todo-id="1" class="todo d-flex justify-content-between draggable" draggable="true">
+                    <h5 class="mb-4"><p>TO DO...</p></h5>
+                    <div todo-id="1" class="todo d-flex justify-content-between draggabl overflow-hidden" draggable="true">
                         <input class="form-check-input check-color" type="checkbox" name="todo">
                         <span class="todo-text">Go for a walk</span> 
                         <div class="dropdown">
@@ -223,7 +224,7 @@
                             </ul>
                           </div>
                     </div>
-                    <div todo-id="2" class="todo d-flex justify-content-between draggable" draggable="true">
+                    <div todo-id="2" class="todo d-flex justify-content-between draggable overflow-hidden" draggable="true">
                         <input class="form-check-input check-color" type="checkbox" name="todo">
                         <span class="todo-text">Run 5 km</span> 
                         <div class="dropdown">
@@ -242,24 +243,26 @@
                 <i id="moveToTodo" class="left bi bi-arrow-left-circle-fill" style="color: rgba(29, 61, 143, 0.836);"></i>
                 <i id="deleteTodoBtn" class="bi bi-trash3-fill" style="color:rgb(150, 87, 125)"></i>
             </div>
-            <div class="done-list dropzone px-5 py-3">
-                <h5 class="mb-3"><u>DONE ✔</u></h5>
-                <div todo-id="1" class="todo d-flex justify-content-between draggable" draggable="true">
-                    <input class="form-check-input check-color" type="checkbox" name="todo">
-                    <span class="todo-text">Do homework</span> 
-                    <div class="dropdown">
-                        <i class="bi bi-chevron-bar-down" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                        <ul class="dropdown-menu drop-color">
-                          <li><a class="dropdown-item todomove" todomove="1" href="#">Done</a></li>
-                          <li><a class="dropdown-item tododelete" tododelete="1" href="#">Delete</a></li>
-                          <li><a class="dropdown-item todoupdate" todoupdate="1" href="#">Update</a></li>
-                        </ul>
-                      </div>
+            <div class="done-list d-flex flex-column justify-content-between overflow-hidden">
+                <div class="done-list dropzone px-5 py-3" style="width: 100%">
+                    <h5 class="mb-3"><p>DONE ✔</p></h5>
+                    <div todo-id="1" class="mt-1 todo d-flex justify-content-between draggable overflow-hidden" draggable="true">
+                        <input class="form-check-input check-color" type="checkbox" name="todo">
+                        <span class="todo-text">Do homework</span> 
+                        <div class="dropdown">
+                            <i class="bi bi-chevron-bar-down" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu drop-color">
+                            <li><a class="dropdown-item todomove" todomove="1" href="#">Done</a></li>
+                            <li><a class="dropdown-item tododelete" tododelete="1" href="#">Delete</a></li>
+                            <li><a class="dropdown-item todoupdate" todoupdate="1" href="#">Update</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex input-group task">
-            <input id="todo-input" type="text" class="form-control input py-3 px-5" placeholder="Type your task here..">
+        <div class="d-flex input-group task overflow-hidden">
+            <input id="todo-input" type="text" class="form-control input py-3 px-3" placeholder="Type your task here..">
             <button id="todo-submit" type="button" class="btn btn-dark addButton py-3 px-4" style="min-width: 12%">Add</button> 
         </div>
     </div>

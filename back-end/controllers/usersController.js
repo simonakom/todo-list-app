@@ -2,7 +2,7 @@
 const express = require("express");
 const data = require("../data.json");
 const router = express.Router();
-const { writeFile } = require("../utils/fileOperations");
+const { writeFile } = require("../utils/fileOperations"); 
 
 //-------------------------------------POST (new user register)----------------------------------------------------------------------------------------------//
 router.post("/register", async (req, res) => {
